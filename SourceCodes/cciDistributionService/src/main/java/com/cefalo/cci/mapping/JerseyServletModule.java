@@ -10,14 +10,14 @@ import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class JerseyServletModule extends com.sun.jersey.guice.JerseyServletModule {
-  @Override
-  protected void configureServlets() {
-    bind(HelloService.class).to(HelloServiceImpl.class);
+	@Override
+	protected void configureServlets() {
+		bind(HelloService.class).to(HelloServiceImpl.class);
 
-    Map<String, String> params = new HashMap<String, String>();
-    params.put(PackagesResourceConfig.PROPERTY_PACKAGES, "com.cefalo.cci.restResource");
-    params.put(ServletContainer.JSP_TEMPLATES_BASE_PATH, "/WEB-INF/jsp");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(PackagesResourceConfig.PROPERTY_PACKAGES, "com.cefalo.cci.restResource");
+		params.put(ServletContainer.JSP_TEMPLATES_BASE_PATH, "/WEB-INF/jsp");
 
-    filter("/resource/*").through(GuiceContainer.class, params);
-  }
+		filter("/resource/*").through(GuiceContainer.class, params);
+	}
 }
