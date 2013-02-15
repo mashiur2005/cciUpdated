@@ -60,6 +60,23 @@
 			<scope>test</scope>
 		</dependency>
 
+    <!--Jersey Test Framework Starts-->
+    <dependency>
+      <groupId>com.sun.jersey.jersey-test-framework</groupId>
+      <artifactId>jersey-test-framework-core</artifactId>
+      <version>1.9</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.jersey-test-framework</groupId>
+      <artifactId>jersey-test-framework-external</artifactId>
+      <version>1.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.jersey-test-framework</groupId>
+      <artifactId>jersey-test-framework-http</artifactId>
+      <version>1.9</version>
+    </dependency>
         <!--hibernate dependencies-->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -114,7 +131,62 @@
             <logTimeZone>GMT</logTimeZone>
           </requestLog>
 				</configuration>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <!--maven jetty Integration Test-->
+              <scanIntervalSeconds>10</scanIntervalSeconds>
+              <daemon>true</daemon>
+              <connectors>
+                <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                  <port>9998</port>
+                  <maxIdleTime>60000</maxIdleTime>
+                </connector>
+              </connectors>
+              <!--maven jetty integration test-->
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
 			</plugin>
+      <!--maven jetty integration test plugin start-->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*IntegrationTest*.java</exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <phase>integration-test</phase>
+            <configuration>
+              <excludes>
+                <exclude>none</exclude>
+              </excludes>
+              <includes>
+                <include>**/*IntegrationTest*.java</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--maven jetty integration test plugin ends-->
 		</plugins>
 	</build>
 </project>
