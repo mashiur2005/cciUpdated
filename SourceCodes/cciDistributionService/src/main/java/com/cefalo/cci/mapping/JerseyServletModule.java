@@ -27,5 +27,8 @@ public class JerseyServletModule extends com.sun.jersey.guice.JerseyServletModul
 
         filter("/resource/*").through(GuiceContainer.class, params);
         filter("/resource/*").through(PersistFilter.class, params);
+
+        filter("/tr/*").through(GuiceContainer.class, params);
+        filter("/tr/*").through(PersistFilter.class, params);
     }
 }
