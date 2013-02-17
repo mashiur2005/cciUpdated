@@ -3,6 +3,7 @@ package com.cefalo.cci.domain;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "employee")
 @XmlRootElement
 @XmlType(propOrder = {"id", "userName", "password", "email", "company", "firstName", "lastName"})
-public class Employee {
+public class Employee implements Serializable {
     private Integer id;
     private String firstName;
     private String lastName;
